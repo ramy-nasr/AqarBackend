@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./transaction-backend
+    container_name: transaction-backend
+    ports:
+      - "8080:8080"
+    environment:
+      POSTGRES_DSN: postgres://user:pass@db:5432/transactions?sslmode=disable
+    depends_on:
+      - rabbitmq
+      - db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"     
+      - "15672:15672" 
+    environment:
+      RABBITMQ_DEFAULT_USER: fhfjqkfv
+      RABBITMQ_DEFAULT_PASS: DkLtNmo4wftpArdGLesI0CrYTlMhPXqk
+
+  db:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: transactions
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
