@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"transaction-backend/internal/domain"
+	"transaction-backend/domain"
 
 	_ "github.com/lib/pq"
 )
